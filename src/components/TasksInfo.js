@@ -6,8 +6,8 @@ export default function TasksInfo({ connectorName, tasks, restartTask, numberOfR
     const [showModal, setShowModal] = useState(false)
     return (
         <div>
-            <div className="flex items-center">
-                <button className="flex items-center p-3 leading-none text-gray-600 bg-gray-100 rounded hover:bg-gray-200 focus:outline-none" onClick={() => setShowModal(true)}>
+            <div className="items-center hidden sm:flex">
+                <button className="items-center p-3 leading-none text-gray-700 bg-gray-300 rounded min-w-max hover:bg-gray-400 focus:outline-none" onClick={() => setShowModal(true)}>
                     <img className="h-4" src={TaskIcon} alt="task" />
                 </button>
 

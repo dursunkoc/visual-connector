@@ -20,7 +20,7 @@ function Connectors({ onUpdateConnector, onAddConnector, onPauseConnector, onRes
           <div className="overflow-x-auto mt-7">
             <table className="w-full whitespace-nowrap">
               <tbody>
-                {state.connectors.filter(connector=>state.connectorFilter==="" || connector.info.type===state.connectorFilter).map(
+                {state.connectors.filter(connector => state.connectorFilter === "" || connector.info.type === state.connectorFilter).map(
                   (connector, index) =>
                     <Connector key={index} connector={connector.info} status={connector.status}
                       onUpdateConnector={onUpdateConnector}
