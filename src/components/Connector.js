@@ -72,7 +72,7 @@ export default function Connector({ connector, status, onUpdateConnector, onPaus
                     <ConnectorEditorButton connector={connector} onUpdateConnector={onUpdateConnector} />
                 </td>
                 <td className="pl-3">
-                    <DeleteButton />
+                    <DeleteButton onDeleteConnector={onDeleteConnector} connector={connector}/>
                 </td>
             </tr>
             <tr className="h-2" />

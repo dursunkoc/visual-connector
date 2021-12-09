@@ -10,6 +10,7 @@ try{
 const initialState = {
     kafkaConnectUrl: defaultUrl,//'http://localhost:8083',
     connectorFilter: "",
+    autoRefreshEnabled: false,
     connectors: []
 }
 

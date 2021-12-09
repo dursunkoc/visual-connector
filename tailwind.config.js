@@ -4,16 +4,21 @@ module.exports = {
   theme: {
     debugScreens: {
       position: ['top', 'left'],
-    }, 
+    },
     extend: {
       animation: {
         bounce200: 'bounce 1s infinite 200ms',
         bounce400: 'bounce 1s infinite 400ms',
-    },
+      },
     }
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ["checked"],
+      borderColor: ["checked"],
+      inset: ["checked"],
+      zIndex: ["hover", "active"],
+    },
   },
   plugins: [
     require('tailwindcss-debug-screens'),

@@ -5,7 +5,7 @@ export default function ConnectorFilter() {
     const filterAllTerm = "";
     const filterSinksTerm = "sink";
     const filterSourceTerm = "source";
-    const notSelected = "text-gray-600 rounded-full hover:text-indigo-700 hover:bg-indigo-100"
+    const notSelected = "text-indigo-300 rounded-full hover:text-indigo-800 hover:bg-indigo-100"
     const selected = "text-indigo-700 bg-indigo-100 rounded-full"
 
     const [state, setState] = useContext(Context)

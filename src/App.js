@@ -4,12 +4,14 @@ import Loader from './components/Loader';
 import Header from "./components/Header";
 import { Context } from './Store'
 import Alert from "./components/Alert";
+import useInterval from "./hooks/interval";
+
 
 function App() {
   const [state, setState] = useContext(Context)
   const [showAddConnectorSuccessAlert, setShowAddConnectorSuccessAlert] = useState(false)
   const [showAddConnectorFailureAlert, setShowAddConnectorFailureAlert] = useState(false)
-  
+
   const [showRestartTaskSuccessAlert, setShowRestartTaskSuccessAlert] = useState(false)
   const [showRestartTaskFailureAlert, setShowRestartTaskFailureAlert] = useState(false)
 
@@ -104,20 +106,36 @@ function App() {
   }
 
 
-  const restartTask = async (connectorName, task)=>{
-    const restartResp = await fetch(`${state.kafkaConnectUrl}/connectors/${connectorName}/tasks/${task.id}/restart`, {method:'POST'})
-    
+  const restartTask = async (connectorName, task) => {
+    const restartResp = await fetch(`${state.kafkaConnectUrl}/connectors/${connectorName}/tasks/${task.id}/restart`, { method: 'POST' })
+
     const restartStatus = restartResp.status
-    
-    if(restartStatus<=300 && restartStatus>=200){
+
+    if (restartStatus <= 300 && restartStatus >= 200) {
       setShowRestartTaskSuccessAlert(true);
-    }else{
+    } else {
       setShowRestartTaskFailureAlert(true);
     }
-    
+
     let data = await fetchConnectors(state.kafkaConnectUrl)
-    setState({...state, connectors: data})
-}
+    setState({ ...state, connectors: data })
+  }
+
+  useInterval(async () => {
+    if (!state.autoRefreshEnabled) {
+      return
+    }
+    setState(st => ({ ...st, loading: true }))
+    try {
+      console.log(`updating data ${new Date()}`);
+      let data = await fetchConnectors(state.kafkaConnectUrl)
+
+      setState({ ...state, connectors: data })
+    } finally {
+      setState(st => ({ ...st, loading: false }))
+      console.log(`updated data ${new Date()}`);
+    }
+  }, 5000);
 
 
   useEffect(() => {
@@ -133,11 +151,11 @@ function App() {
     <div>
       {state.loading && <Loader />}
       <Header />
-      {showAddConnectorSuccessAlert ? (<Alert setShowAlert={setShowAddConnectorSuccessAlert} message={"Successfully added connector"}/>) : null}
-      {showAddConnectorFailureAlert ? (<Alert setShowAlert={setShowAddConnectorFailureAlert} message={"Operation Failed check kafka-connect logs!"}/>) : null}
+      {showAddConnectorSuccessAlert ? (<Alert setShowAlert={setShowAddConnectorSuccessAlert} message={"Successfully added connector"} />) : null}
+      {showAddConnectorFailureAlert ? (<Alert setShowAlert={setShowAddConnectorFailureAlert} message={"Operation Failed check kafka-connect logs!"} />) : null}
 
-      {showRestartTaskSuccessAlert ? (<Alert setShowAlert={setShowRestartTaskSuccessAlert} message={"Successfully triggered restart"}/>) : null}
-      {showRestartTaskFailureAlert ? (<Alert setShowAlert={setShowRestartTaskFailureAlert} message={"Failed to trigger restart please check Kafka Connect logs."}/>) : null}
+      {showRestartTaskSuccessAlert ? (<Alert setShowAlert={setShowRestartTaskSuccessAlert} message={"Successfully triggered restart"} />) : null}
+      {showRestartTaskFailureAlert ? (<Alert setShowAlert={setShowRestartTaskFailureAlert} message={"Failed to trigger restart please check Kafka Connect logs."} />) : null}
       <Connectors
         onUpdateConnector={onUpdateConnector}
         onAddConnector={onAddConnector}
