@@ -10,7 +10,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1",
+    "react-router-dom": "^6.2.1",
     "react-scripts": "4.0.3",
+    "react-select": "^5.2.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -19,6 +21,7 @@
     "build": "craco build",
     "test": "craco test"
   },
+  "proxy": "http://localhost:3005",
   "eslintConfig": {
     "extends": [
       "react-app",

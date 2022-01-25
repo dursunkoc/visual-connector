@@ -32,7 +32,7 @@ export default function ConnectorEditor({ setShowModal, connector, onSaveConnect
                     <div className="relative flex flex-col w-full bg-white border-0 rounded-lg shadow-lg outline-none focus:outline-none">
                         {/*header*/}
                         <div className="flex items-start justify-between p-5 bg-gray-500 border-b border-solid rounded-t border-blueGray-200">
-                            <h3 className="text-2xl font-semibold">
+                            <h3 className="text-2xl font-semibold text-gray-900">
                                 Edit Connector
                             </h3>
                             <button
@@ -46,8 +46,8 @@ export default function ConnectorEditor({ setShowModal, connector, onSaveConnect
                         {/*body*/}
                         
                         <div className="relative flex-auto px-3 py-1 pb-10">
-                            <textarea
-                                className="block w-full mt-1 border-2 border-green-600 outline-none form-textarea focus:outline-none opacity-4"
+                            <textarea readOnly={onSaveConnector?false:true}
+                                className="block w-full mt-1 text-gray-900 border-2 border-green-600 outline-none form-textarea focus:outline-none opacity-4"
                                 rows="12" cols="88"
                                 placeholder="Enter Connector configuration."
                                 value={connectorStr} onChange={e=>connectorChange(e.target.value)}
@@ -61,12 +61,13 @@ export default function ConnectorEditor({ setShowModal, connector, onSaveConnect
                                 onClick={() => setShowModal(false)}>
                                 Close
                             </button>
+                            {onSaveConnector &&
                             <button
                                 className="px-6 py-2 mb-1 mr-1 text-sm font-bold text-green-500 uppercase transition-all duration-150 ease-linear outline-none background-transparent focus:outline-none"
                                 type="button"
                                 onClick={() => saveConnector()}>
                                 Save
-                            </button>
+                            </button>}
                         </div>
                         {showAlert ? (<Alert setShowAlert={setShowAlert} message={"Please insert a valid Connector definition!"}/>) : null}
                     </div>
