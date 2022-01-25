@@ -23,7 +23,8 @@ export default function ConnectorRepo({ setShowModal }) {
             if ([401, 403].includes(res.status)) {
                 logout()
             } else {
-                setConnectors(res.json())
+                let data = await res.json()
+                setConnectors(data)
             }
         }
 

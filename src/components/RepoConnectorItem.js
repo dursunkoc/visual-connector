@@ -29,7 +29,8 @@ export default function RepoConnectorItem({ connectorName }) {
             if ([401, 403].includes(res.status)) {
                 logout()
             } else {
-                setConnector(res.json())
+                let data = await res.json();
+                setConnector(data)
             }
         }
 
